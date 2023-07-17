@@ -4,15 +4,12 @@ import { VueLoaderPlugin } from "vue-loader";
 const config = defineConfig({
   context: __dirname,
   entry: {
-    main: "./src/main.ts",
-  },
-  optimization: {
-    sideEffects: false,
-    moduleIds: "named",
-    minimize: false,
+    main: {
+      import: ["./src/main.ts"],
+    },
   },
   output: {
-    filename: "[name].js",
+    filename: "[name].[contenthash].bundle.js",
     path: "dist",
   },
   module: {
@@ -46,6 +43,9 @@ const config = defineConfig({
         type: "asset",
       },
     ],
+  },
+  optimization: {
+    moduleIds: "deterministic",
   },
   builtins: {
     html: [
